@@ -1,0 +1,46 @@
+---
+title: "ResaleFlatPoster"
+format: html
+---
+
+## Choropleth
+Choropleth of Singapore Map with Plan Area Name
+
+```{r}
+packages = c('sf', 'tmap', 'tidyverse')
+for (p in packages){
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p,character.only = T)
+}
+```
+
+You can add options to executable code like this 
+
+```{r}
+shapefile_path <- "data/geospatial/MP14_PLNG_AREA_NO_SEA_PL.shp"
+singapore_map <- st_read(shapefile_path)
+
+singapore_map$geometry <- st_make_valid(singapore_map$geometry)
+#print(singapore_map)
+singapore_map <- singapore_map %>%
+  mutate(PLN_AREA_N = ifelse(grepl("Islands|Catchment", PLN_AREA_N, ignore.case = TRUE), "", PLN_AREA_N))
+
+
+```
+```{r}
+# Set the tmap mode
+tmap_mode("plot")
+
+# Plot the map with labels for planning areas
+singapore_map_plot <- tm_shape(singapore_map) +
+  tm_polygons() +  # Add polygons to plot the shapes of the subzones
+  tm_text("PLN_AREA_N", size = 0.5, auto.placement = TRUE, root = 5) +  # Label the planning areas
+  tm_layout(main.title = "Map of Singapore Planning Areas", main.title.position = "center")
+
+# Print the map object to display it
+print(singapore_map_plot)
+
+```
+The `echo: false` option disables the printing of code (only output is displayed).
