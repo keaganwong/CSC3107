@@ -3,6 +3,8 @@ title: "ResaleFlatPoster"
 format: html
 ---
 
+Install tmap package if not installed
+
 ## Choropleth
 Choropleth of Singapore Map with Plan Area Name
 
