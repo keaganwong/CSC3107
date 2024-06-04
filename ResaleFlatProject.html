@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ResaleFlatPoster</title>
+<title>ResaleFlatProject</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">ResaleFlatPoster</h1>
+<h1 class="title">ResaleFlatProject</h1>
 </div>
 
 
@@ -96,22 +96,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p>Install tmap package if not installed</p>
 <section id="choropleth" class="level2">
 <h2 class="anchored" data-anchor-id="choropleth">Choropleth</h2>
 <p>Choropleth of Singapore Map with Plan Area Name</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'sf'</span>, <span class="st">'tmap'</span>, <span class="st">'tidyverse'</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (p <span class="cf">in</span> packages){</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(p, <span class="at">character.only =</span> T)){</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(p)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(p,<span class="at">character.only =</span> T)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Install and load necessary packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'sf'</span>, <span class="st">'tmap'</span>, <span class="st">'tidyverse'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (p <span class="cf">in</span> packages){</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(p, <span class="at">character.only =</span> <span class="cn">TRUE</span>)){</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(p)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(p, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: sf</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE</code></pre>
+<pre><code>Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.3.1; sf_use_s2() is TRUE</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: tmap</code></pre>
@@ -135,14 +137,12 @@ remotes::install_github('r-tmap/tmap')</code></pre>
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-</div>
-<p>You can add options to executable code like this</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>shapefile_path <span class="ot">&lt;-</span> <span class="st">"data/geospatial/MP14_PLNG_AREA_NO_SEA_PL.shp"</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> <span class="fu">st_read</span>(shapefile_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read and process shapefile</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>shapefile_path <span class="ot">&lt;-</span> <span class="st">"data/geospatial/MP14_PLNG_AREA_NO_SEA_PL.shp"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> <span class="fu">st_read</span>(shapefile_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `MP14_PLNG_AREA_NO_SEA_PL' from data source 
-  `/Users/wkt/Downloads/SIT/Y2/Tri_3/CSC3109/Project/data/geospatial/MP14_PLNG_AREA_NO_SEA_PL.shp' 
+  `C:\Users\Keag\Documents\CSC3107\data\geospatial\MP14_PLNG_AREA_NO_SEA_PL.shp' 
   using driver `ESRI Shapefile'
 Simple feature collection with 55 features and 12 fields
 Geometry type: MULTIPOLYGON
@@ -151,33 +151,119 @@ Bounding box:  xmin: 2667.538 ymin: 15748.72 xmax: 56396.44 ymax: 50256.33
 Projected CRS: SVY21</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>singapore_map<span class="sc">$</span>geometry <span class="ot">&lt;-</span> <span class="fu">st_make_valid</span>(singapore_map<span class="sc">$</span>geometry)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#print(singapore_map)</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> singapore_map <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PLN_AREA_N =</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">"Islands|Catchment"</span>, PLN_AREA_N, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>), <span class="st">""</span>, PLN_AREA_N))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> singapore_map <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PLN_AREA_N =</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">"Islands|Catchment"</span>, PLN_AREA_N, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>), <span class="st">""</span>, PLN_AREA_N))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Read CSV data</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>csv_data_path <span class="ot">&lt;-</span> <span class="st">"flatprice5_last3year.csv"</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(csv_data_path)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if 'town' column exists and rename it to match shapefile</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="st">"town"</span> <span class="sc">%in%</span> <span class="fu">names</span>(data)) {</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">PLN_AREA_N =</span> town)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"The column 'town' does not exist in the CSV data."</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize the data to get average resale price for each town</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>data_summary <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PLN_AREA_N) <span class="sc">%&gt;%</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_resale_price =</span> <span class="fu">mean</span>(resale_price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure 'PLN_AREA_N' exists in both data frames before merging</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="st">"PLN_AREA_N"</span> <span class="sc">%in%</span> <span class="fu">names</span>(singapore_map)) {</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"The column 'PLN_AREA_N' does not exist in the shapefile data."</span>)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge the summarized data with the shapefile data</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> singapore_map <span class="sc">%&gt;%</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(data_summary, <span class="at">by =</span> <span class="st">"PLN_AREA_N"</span>)</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if the merge was successful</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(singapore_map) <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"The merge resulted in an empty data frame. Please check the input data."</span>)</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for NA values in 'PLN_AREA_N'</span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">sum</span>(<span class="fu">is.na</span>(singapore_map<span class="sc">$</span>PLN_AREA_N)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the tmap mode</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">"plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify merged data</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(singapore_map))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 13 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 11059.9 ymin: 26375.86 xmax: 42502.87 ymax: 42176.12
+Projected CRS: SVY21
+  OBJECTID  PLN_AREA_N PLN_AREA_C CA_IND          REGION_N REGION_C
+1        1  ANG MO KIO         AM      N NORTH-EAST REGION      NER
+2        2       BEDOK         BD      N       EAST REGION       ER
+3        3      BISHAN         BS      N    CENTRAL REGION       CR
+4        4    BOON LAY         BL      N       WEST REGION       WR
+5        5 BUKIT BATOK         BK      N       WEST REGION       WR
+6        6 BUKIT MERAH         BM      N    CENTRAL REGION       CR
+           INC_CRC FMEL_UPD_D   X_ADDR   Y_ADDR SHAPE_Leng SHAPE_Area
+1 E5CBDDE0C2113055 2016-05-11 28976.88 40229.12   17494.24   13941380
+2 1719251260799DF6 2016-05-11 38582.67 34032.10   21872.80   21733188
+3 BA616285F402846F 2016-05-11 28789.76 37450.89   13517.12    7618921
+4 A3DC87118B43CDED 2016-05-11 13410.38 33008.99   18528.47    8279408
+5 FB44C870B04B7F57 2016-05-11 19255.42 37527.65   15234.22   11133256
+6 738B479882E4EE28 2016-05-11 26865.78 28662.87   29156.29   14462472
+  avg_resale_price                       geometry
+1         514378.2 POLYGON ((30658.5 42047.53,...
+2         506537.6 POLYGON ((38974.27 36138.24...
+3         741177.7 POLYGON ((29772.19 38311.8,...
+4               NA POLYGON ((12861.38 32207.49...
+5         546641.7 POLYGON ((20294.46 39114.53...
+6         664019.7 POLYGON ((26231.96 30743.34...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(singapore_map)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Classes 'sf' and 'data.frame':  55 obs. of  14 variables:
+ $ OBJECTID        : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ PLN_AREA_N      : chr  "ANG MO KIO" "BEDOK" "BISHAN" "BOON LAY" ...
+ $ PLN_AREA_C      : chr  "AM" "BD" "BS" "BL" ...
+ $ CA_IND          : chr  "N" "N" "N" "N" ...
+ $ REGION_N        : chr  "NORTH-EAST REGION" "EAST REGION" "CENTRAL REGION" "WEST REGION" ...
+ $ REGION_C        : chr  "NER" "ER" "CR" "WR" ...
+ $ INC_CRC         : chr  "E5CBDDE0C2113055" "1719251260799DF6" "BA616285F402846F" "A3DC87118B43CDED" ...
+ $ FMEL_UPD_D      : Date, format: "2016-05-11" "2016-05-11" ...
+ $ X_ADDR          : num  28977 38583 28790 13410 19255 ...
+ $ Y_ADDR          : num  40229 34032 37451 33009 37528 ...
+ $ SHAPE_Leng      : num  17494 21873 13517 18528 15234 ...
+ $ SHAPE_Area      : num  13941380 21733188 7618921 8279408 11133256 ...
+ $ avg_resale_price: num  514378 506538 741178 NA 546642 ...
+ $ geometry        :sfc_GEOMETRY of length 55; first list element: List of 1
+  ..$ : num [1:447, 1:2] 30659 30679 30679 30690 30709 ...
+  ..- attr(*, "class")= chr [1:3] "XY" "POLYGON" "sfg"
+ - attr(*, "sf_column")= chr "geometry"
+ - attr(*, "agr")= Factor w/ 3 levels "constant","aggregate",..: NA NA NA NA NA NA NA NA NA NA ...
+  ..- attr(*, "names")= chr [1:13] "OBJECTID" "PLN_AREA_N" "PLN_AREA_C" "CA_IND" ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the tmap mode</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">"plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>tmap mode set to plotting</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the map with labels for planning areas</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>singapore_map_plot <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(singapore_map) <span class="sc">+</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>() <span class="sc">+</span>  <span class="co"># Add polygons to plot the shapes of the subzones</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_text</span>(<span class="st">"PLN_AREA_N"</span>, <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">auto.placement =</span> <span class="cn">TRUE</span>, <span class="at">root =</span> <span class="dv">5</span>) <span class="sc">+</span>  <span class="co"># Label the planning areas</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">main.title =</span> <span class="st">"Map of Singapore Planning Areas"</span>, <span class="at">main.title.position =</span> <span class="st">"center"</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the map object to display it</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(singapore_map_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the map with labels</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>singapore_map_plot <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(singapore_map) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">col =</span> <span class="st">"avg_resale_price"</span>, <span class="at">palette =</span> <span class="st">"Blues"</span>, <span class="at">title =</span> <span class="st">"Avg Resale Price"</span>) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_text</span>(<span class="st">"PLN_AREA_N"</span>, <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">shadow =</span> <span class="cn">TRUE</span>, <span class="at">root =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">main.title =</span> <span class="st">"Map of Singapore Planning Areas"</span>, <span class="at">main.title.position =</span> <span class="st">"center"</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the map object</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(singapore_map_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="ResaleFlatProject_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="ResaleFlatProject_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>The <code>echo: false</code> option disables the printing of code (only output is displayed).</p>
 </section>
 
 </main>

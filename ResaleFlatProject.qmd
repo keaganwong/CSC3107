@@ -1,5 +1,5 @@
 ---
-title: "ResaleFlatPoster"
+title: "ResaleFlatProject"
 format: html
 ---
 
@@ -9,40 +9,71 @@ Install tmap package if not installed
 Choropleth of Singapore Map with Plan Area Name
 
 ```{r}
+## Install and load necessary packages
 packages = c('sf', 'tmap', 'tidyverse')
 for (p in packages){
-  if(!require(p, character.only = T)){
+  if(!require(p, character.only = TRUE)){
     install.packages(p)
   }
-  library(p,character.only = T)
+  library(p, character.only = TRUE)
 }
-```
 
-You can add options to executable code like this 
-
-```{r}
+# Read and process shapefile
 shapefile_path <- "data/geospatial/MP14_PLNG_AREA_NO_SEA_PL.shp"
 singapore_map <- st_read(shapefile_path)
-
 singapore_map$geometry <- st_make_valid(singapore_map$geometry)
-#print(singapore_map)
-singapore_map <- singapore_map %>%
+singapore_map <- singapore_map |>
   mutate(PLN_AREA_N = ifelse(grepl("Islands|Catchment", PLN_AREA_N, ignore.case = TRUE), "", PLN_AREA_N))
 
+# Read CSV data
+csv_data_path <- "flatprice5_last3year.csv"
+data <- read.csv(csv_data_path)
 
-```
-```{r}
+# Check if 'town' column exists and rename it to match shapefile
+if ("town" %in% names(data)) {
+  data <- data %>%
+    rename(PLN_AREA_N = town)
+} else {
+  stop("The column 'town' does not exist in the CSV data.")
+}
+
+# Summarize the data to get average resale price for each town
+data_summary <- data %>%
+  group_by(PLN_AREA_N) %>%
+  summarise(avg_resale_price = mean(resale_price, na.rm = TRUE))
+
+# Ensure 'PLN_AREA_N' exists in both data frames before merging
+if (!"PLN_AREA_N" %in% names(singapore_map)) {
+  stop("The column 'PLN_AREA_N' does not exist in the shapefile data.")
+}
+
+# Merge the summarized data with the shapefile data
+singapore_map <- singapore_map %>%
+  left_join(data_summary, by = "PLN_AREA_N")
+
+# Check if the merge was successful
+if (nrow(singapore_map) == 0) {
+  stop("The merge resulted in an empty data frame. Please check the input data.")
+}
+
+# Check for NA values in 'PLN_AREA_N'
+print(sum(is.na(singapore_map$PLN_AREA_N)))
+
+# Verify merged data
+print(head(singapore_map))
+str(singapore_map)
+
 # Set the tmap mode
 tmap_mode("plot")
 
-# Plot the map with labels for planning areas
+# Plot the map with labels
 singapore_map_plot <- tm_shape(singapore_map) +
-  tm_polygons() +  # Add polygons to plot the shapes of the subzones
-  tm_text("PLN_AREA_N", size = 0.5, auto.placement = TRUE, root = 5) +  # Label the planning areas
+  tm_polygons(col = "avg_resale_price", palette = "Blues", title = "Avg Resale Price") +
+  tm_text("PLN_AREA_N", size = 0.5, col = "black", shadow = TRUE, root = 4) +
   tm_layout(main.title = "Map of Singapore Planning Areas", main.title.position = "center")
 
-# Print the map object to display it
+# Print the map object
 print(singapore_map_plot)
 
+
 ```
-The `echo: false` option disables the printing of code (only output is displayed).
