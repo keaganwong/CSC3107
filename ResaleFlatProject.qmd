@@ -77,3 +77,47 @@ print(singapore_map_plot)
 
 
 ```
+
+```{r}
+library(sf)
+library(cartogram)
+library(ggplot2)
+library(dplyr)
+library(repr)
+library(viridis)
+
+# Inspect the data
+str(singapore_map)
+summary(singapore_map$avg_resale_price)
+
+# Fill NA values in avg_resale_price with a default value (e.g., mean value)
+singapore_map$avg_resale_price[is.na(singapore_map$avg_resale_price)] <- mean(singapore_map$avg_resale_price, na.rm = TRUE)
+
+# Ensure geometry is in WKT format and convert to sf object
+singapore_sf <- st_as_sf(singapore_map, wkt = "geometry", crs = 4326)
+
+# Create the cartogram
+singapore_cartogram <- cartogram_cont(singapore_sf, "avg_resale_price", itermax = 10)
+
+# Calculate centroids for labeling
+centroids <- st_centroid(singapore_cartogram)
+
+# Plot the cartogram
+ggplot() +
+  geom_sf(data = singapore_cartogram, aes(fill = avg_resale_price)) +
+  geom_sf_text(data = centroids, aes(label = PLN_AREA_N), size = 3, color = "black") +
+  scale_fill_viridis_c(option = "viridis") +
+  theme_minimal() +
+  theme(
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.title.y = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    panel.grid = element_blank(),
+    legend.position = "right"
+  ) +
+  labs(title = "Cartogram of Singapore by Average Resale Price",
+       fill = "Average Resale Price")
+```
