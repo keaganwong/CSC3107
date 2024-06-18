@@ -86,38 +86,78 @@ library(dplyr)
 library(repr)
 library(viridis)
 
-# Inspect the data
+# Install and load necessary packages
+packages = c('sf', 'tmap', 'tidyverse', 'cartogram')
+for (p in packages){
+  if(!require(p, character.only = TRUE)){
+    install.packages(p)
+  }
+  library(p, character.only = TRUE)
+}
+
+# Read and process shapefile
+shapefile_path <- "data/geospatial/MP14_PLNG_AREA_NO_SEA_PL.shp"
+singapore_map <- st_read(shapefile_path)
+singapore_map$geometry <- st_make_valid(singapore_map$geometry)
+singapore_map <- singapore_map %>%
+  mutate(PLN_AREA_N = ifelse(grepl("Islands|Catchment", PLN_AREA_N, ignore.case = TRUE), "", PLN_AREA_N))
+
+# Read CSV data
+csv_data_path <- "flatprice5_last3year.csv"
+data <- read.csv(csv_data_path)
+
+# Check if 'town' column exists and rename it to match shapefile
+if ("town" %in% names(data)) {
+  data <- data %>%
+    rename(PLN_AREA_N = town)
+} else {
+  stop("The column 'town' does not exist in the CSV data.")
+}
+
+# Summarize the data to get average resale price for each town
+data_summary <- data %>%
+  group_by(PLN_AREA_N) %>%
+  summarise(avg_resale_price = mean(resale_price, na.rm = TRUE))
+
+# Ensure 'PLN_AREA_N' exists in both data frames before merging
+if (!"PLN_AREA_N" %in% names(singapore_map)) {
+  stop("The column 'PLN_AREA_N' does not exist in the shapefile data.")
+}
+
+# Merge the summarized data with the shapefile data
+singapore_map <- singapore_map %>%
+  left_join(data_summary, by = "PLN_AREA_N")
+
+# Check if the merge was successful
+if (nrow(singapore_map) == 0) {
+  stop("The merge resulted in an empty data frame. Please check the input data.")
+}
+
+# Check for NA values in 'PLN_AREA_N'
+print(sum(is.na(singapore_map$PLN_AREA_N)))
+
+# Verify merged data
+print(head(singapore_map))
 str(singapore_map)
-summary(singapore_map$avg_resale_price)
 
-# Fill NA values in avg_resale_price with a default value (e.g., mean value)
-singapore_map$avg_resale_price[is.na(singapore_map$avg_resale_price)] <- mean(singapore_map$avg_resale_price, na.rm = TRUE)
-
-# Ensure geometry is in WKT format and convert to sf object
-singapore_sf <- st_as_sf(singapore_map, wkt = "geometry", crs = 4326)
+# Fill NA values in avg_resale_price with a default value (0)
+singapore_map$avg_resale_price[is.na(singapore_map$avg_resale_price)] <- 100000
 
 # Create the cartogram
-singapore_cartogram <- cartogram_cont(singapore_sf, "avg_resale_price", itermax = 10)
+singapore_cartogram <- cartogram_cont(singapore_map, "avg_resale_price", itermax = 10)
 
-# Calculate centroids for labeling
-centroids <- st_centroid(singapore_cartogram)
+singapore_cartogram_filtered <- singapore_cartogram %>%
+  filter(avg_resale_price != 100000)
 
-# Plot the cartogram
-ggplot() +
-  geom_sf(data = singapore_cartogram, aes(fill = avg_resale_price)) +
-  geom_sf_text(data = centroids, aes(label = PLN_AREA_N), size = 3, color = "black") +
-  scale_fill_viridis_c(option = "viridis") +
-  theme_minimal() +
-  theme(
-    axis.title.x = element_blank(),
-    axis.text.x = element_blank(),
-    axis.ticks.x = element_blank(),
-    axis.title.y = element_blank(),
-    axis.text.y = element_blank(),
-    axis.ticks.y = element_blank(),
-    panel.grid = element_blank(),
-    legend.position = "right"
-  ) +
-  labs(title = "Cartogram of Singapore by Average Resale Price",
-       fill = "Average Resale Price")
+# Set the tmap mode
+tmap_mode("plot")
+
+# Plot the cartogram with labels
+singapore_cartogram_plot <- tm_shape(singapore_cartogram_filtered) +
+  tm_polygons(col = "avg_resale_price", palette = "Blues", title = "Avg Resale Price") +
+  tm_text("PLN_AREA_N", size = 0.5, col = "black", shadow = TRUE, root = 4) +
+  tm_layout(main.title = "Cartogram of Singapore Planning Areas", main.title.position = "center")
+
+# Print the map object
+print(singapore_cartogram_plot)
 ```
