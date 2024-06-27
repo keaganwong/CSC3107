@@ -85,6 +85,7 @@ library(ggplot2)
 library(dplyr)
 library(repr)
 library(viridis)
+library(RColorBrewer)
 
 # Install and load necessary packages
 packages = c('sf', 'tmap', 'tidyverse', 'cartogram')
@@ -140,22 +141,33 @@ print(sum(is.na(singapore_map$PLN_AREA_N)))
 print(head(singapore_map))
 str(singapore_map)
 
-# Fill NA values in avg_resale_price with a default value (0)
-singapore_map$avg_resale_price[is.na(singapore_map$avg_resale_price)] <- 100000
+# Fill NA values in avg_resale_price with a default value (50,000)
+singapore_map$avg_resale_price[is.na(singapore_map$avg_resale_price)] <- 50000
+
+# Create a new column for labeling based on avg_resale_price
+singapore_map <- singapore_map %>%
+  mutate(label = ifelse(avg_resale_price < 450000 | avg_resale_price == 50000, NA, PLN_AREA_N))
 
 # Create the cartogram
 singapore_cartogram <- cartogram_cont(singapore_map, "avg_resale_price", itermax = 10)
 
-singapore_cartogram_filtered <- singapore_cartogram %>%
-  filter(avg_resale_price != 100000)
-
 # Set the tmap mode
 tmap_mode("plot")
 
-# Plot the cartogram with labels
-singapore_cartogram_plot <- tm_shape(singapore_cartogram_filtered) +
-  tm_polygons(col = "avg_resale_price", palette = "Blues", title = "Avg Resale Price") +
-  tm_text("PLN_AREA_N", size = 0.5, col = "black", shadow = TRUE, root = 4) +
+# Define the breaks and labels for the color scale
+breaks <- c(50000, 450000, 500000, 550000, 600000, 650000, 700000, 750000, 800000)
+labels <- c("Missing" , "450,000 to 500,000", "500,000 to 550,000", "550,000 to 600,000", "600,000 to 650,000", "650,000 to 700,000", "700,000 to 750,000", "750,000 to 800,000")
+
+# Create a factor column for avg_resale_price with specified levels
+singapore_map$avg_resale_price <- factor(singapore_map$avg_resale_price, levels = breaks)
+
+# Define your color palette and breaks
+palette <- c("grey", brewer.pal(5, "Blues"))  # Replace '5' with the number of colors you need
+
+# Plot the cartogram with custom colors
+singapore_cartogram_plot <- tm_shape(singapore_cartogram) +
+  tm_polygons(col = "avg_resale_price", palette = palette, title = "Avg Resale Price", breaks = breaks, labels = labels, colorNA = "grey") +
+  tm_text("label", size = 0.5, col = "black", shadow = TRUE, root = 4) +
   tm_layout(main.title = "Cartogram of Singapore Planning Areas", main.title.position = "center")
 
 # Print the map object
