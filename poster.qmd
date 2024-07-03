@@ -69,10 +69,22 @@ include_graphics("images/original.png")
 
 
 ## Data
+*   Resale flat prices based on registration date from Jan-2017 onwards[^resale_flat_price_2024]
 
+[^resale_flat_price_2024]: <https://beta.data.gov.sg/collections/189/datasets/d_8b84c4ee58e3cfc0ece0d773c8ca6abc/view>
 
 
 ## Software
+
+We used the Quarto publication framework and the R programming language, along with the following third-party packages:
+
+*   *sf* for handling and analyzing spatial data in simple feature format, making it easy to work with geographic information.
+*   *cartogram* for creating cartograms, which are maps that represent data by distorting the geometry of spatial features based on the values of a particular variable.
+*   *ggplot2* for visualization, using a powerful and flexible grammar of graphics to create a wide variety of static and dynamic plots.
+*   *dplyr* for data manipulation and transformation, providing a set of intuitive functions for filtering, summarizing, and modifying data frames.
+*   *repr* for controlling and customizing the representation of objects in various formats, enhancing the display of outputs.
+*   *viridis* for color scales, providing perceptually uniform color maps for better visualization and interpretation of data.
+*   *RColorBrewer* for creating color palettes, offering a collection of color schemes that are particularly useful for thematic mapping and data visualization.
 
 
 # Improved Visualization
@@ -87,8 +99,7 @@ include_graphics("images/original.png")
 include_graphics("images/cartogram.png")
 ```
 
-
-
-
 # Conclusion
+
+In conclusion, our project demonstrates the effectiveness of data visualization techniques in understanding and communicating the dynamics of HDB resale prices in Singapore. By leveraging spatial data analysis and various visualization tools, we provided a clear and comprehensive view of price variations across different regions. Our improved visualization addresses key issues identified in previous work, enhancing the readability and interpretability of the data. As HDB prices continue to evolve, ongoing analysis and visualization will remain essential in capturing and responding to these changes effectively
 
