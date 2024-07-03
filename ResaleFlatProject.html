@@ -109,69 +109,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>             <span class="st">'repr'</span>,</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>             <span class="st">'viridis'</span>,</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>             <span class="st">'RColorBrewer'</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (p <span class="cf">in</span> packages){</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(p, <span class="at">character.only =</span> <span class="cn">TRUE</span>)){</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(p)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(p, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: sf</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.3.1; sf_use_s2() is TRUE</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: tmap</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Breaking News: tmap 3.x is retiring. Please test v4, e.g. with
-remotes::install_github('r-tmap/tmap')</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: tidyverse</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.1
-✔ purrr     1.0.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
-Loading required package: cartogram</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'cartogram' was built under R version 4.4.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: repr</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'repr' was built under R version 4.4.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: viridis</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'viridis' was built under R version 4.4.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: viridisLite
-Loading required package: RColorBrewer</code></pre>
-</div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (p <span class="cf">in</span> packages){</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(p, <span class="at">character.only =</span> <span class="cn">TRUE</span>)){</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(p)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(p, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="choropleth" class="level2">
 <h2 class="anchored" data-anchor-id="choropleth">Choropleth</h2>
 <p>Choropleth of Singapore Map with Plan Area Name</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read and process shapefile</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>shapefile_path <span class="ot">&lt;-</span> <span class="st">"data/geospatial/MP14_PLNG_AREA_NO_SEA_PL.shp"</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> <span class="fu">st_read</span>(shapefile_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read and process shapefile</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>shapefile_path <span class="ot">&lt;-</span> <span class="st">"data/geospatial/MP14_PLNG_AREA_NO_SEA_PL.shp"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> <span class="fu">st_read</span>(shapefile_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `MP14_PLNG_AREA_NO_SEA_PL' from data source 
   `C:\Users\User\Desktop\Year 2 Tri 3\CSC3107 Info Visual\CSC3107 Project\data\geospatial\MP14_PLNG_AREA_NO_SEA_PL.shp' 
@@ -182,50 +135,50 @@ Dimension:     XY
 Bounding box:  xmin: 2667.538 ymin: 15748.72 xmax: 56396.44 ymax: 50256.33
 Projected CRS: SVY21</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>singapore_map<span class="sc">$</span>geometry <span class="ot">&lt;-</span> <span class="fu">st_make_valid</span>(singapore_map<span class="sc">$</span>geometry)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> singapore_map <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PLN_AREA_N =</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">"Islands|Catchment"</span>, PLN_AREA_N, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>), <span class="st">""</span>, PLN_AREA_N))</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Read CSV data</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>csv_data_path <span class="ot">&lt;-</span> <span class="st">"flatprice5.csv"</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(csv_data_path)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(data, month <span class="sc">&gt;=</span> <span class="st">"2021-06"</span> <span class="sc">&amp;</span> month <span class="sc">&lt;=</span> <span class="st">"2024-05"</span>)</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(filtered_data) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if 'town' column exists and rename it to match shapefile</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="st">"town"</span> <span class="sc">%in%</span> <span class="fu">names</span>(filtered_data)) {</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  filtered_data <span class="ot">&lt;-</span> filtered_data <span class="sc">%&gt;%</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">PLN_AREA_N =</span> town)</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"The column 'town' does not exist in the CSV data."</span>)</span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize the data to get average resale price for each town</span></span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>data_summary <span class="ot">&lt;-</span> filtered_data <span class="sc">%&gt;%</span></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PLN_AREA_N) <span class="sc">%&gt;%</span></span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_resale_price =</span> <span class="fu">mean</span>(resale_price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure 'PLN_AREA_N' exists in both data frames before merging</span></span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="st">"PLN_AREA_N"</span> <span class="sc">%in%</span> <span class="fu">names</span>(singapore_map)) {</span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"The column 'PLN_AREA_N' does not exist in the shapefile data."</span>)</span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge the summarized data with the shapefile data</span></span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> singapore_map <span class="sc">%&gt;%</span></span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(data_summary, <span class="at">by =</span> <span class="st">"PLN_AREA_N"</span>)</span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if the merge was successful</span></span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(singapore_map) <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"The merge resulted in an empty data frame. Please check the input data."</span>)</span>
-<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for NA values in 'PLN_AREA_N'</span></span>
-<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">sum</span>(<span class="fu">is.na</span>(singapore_map<span class="sc">$</span>PLN_AREA_N)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>singapore_map<span class="sc">$</span>geometry <span class="ot">&lt;-</span> <span class="fu">st_make_valid</span>(singapore_map<span class="sc">$</span>geometry)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> singapore_map <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PLN_AREA_N =</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">"Islands|Catchment"</span>, PLN_AREA_N, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>), <span class="st">""</span>, PLN_AREA_N))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Read CSV data</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>csv_data_path <span class="ot">&lt;-</span> <span class="st">"flatprice5.csv"</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(csv_data_path)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(data, month <span class="sc">&gt;=</span> <span class="st">"2021-06"</span> <span class="sc">&amp;</span> month <span class="sc">&lt;=</span> <span class="st">"2024-05"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(filtered_data) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if 'town' column exists and rename it to match shapefile</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="st">"town"</span> <span class="sc">%in%</span> <span class="fu">names</span>(filtered_data)) {</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  filtered_data <span class="ot">&lt;-</span> filtered_data <span class="sc">%&gt;%</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">PLN_AREA_N =</span> town)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"The column 'town' does not exist in the CSV data."</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize the data to get average resale price for each town</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>data_summary <span class="ot">&lt;-</span> filtered_data <span class="sc">%&gt;%</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PLN_AREA_N) <span class="sc">%&gt;%</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_resale_price =</span> <span class="fu">mean</span>(resale_price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure 'PLN_AREA_N' exists in both data frames before merging</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="st">"PLN_AREA_N"</span> <span class="sc">%in%</span> <span class="fu">names</span>(singapore_map)) {</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"The column 'PLN_AREA_N' does not exist in the shapefile data."</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge the summarized data with the shapefile data</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> singapore_map <span class="sc">%&gt;%</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(data_summary, <span class="at">by =</span> <span class="st">"PLN_AREA_N"</span>)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if the merge was successful</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(singapore_map) <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"The merge resulted in an empty data frame. Please check the input data."</span>)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for NA values in 'PLN_AREA_N'</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">sum</span>(<span class="fu">is.na</span>(singapore_map<span class="sc">$</span>PLN_AREA_N)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify merged data</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(singapore_map))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify merged data</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(singapore_map))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 6 features and 13 fields
 Geometry type: POLYGON
@@ -254,7 +207,7 @@ Projected CRS: SVY21
 5         546641.7 POLYGON ((20294.46 39114.53...
 6         664019.7 POLYGON ((26231.96 30743.34...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(singapore_map)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(singapore_map)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Classes 'sf' and 'data.frame':  55 obs. of  14 variables:
  $ OBJECTID        : int  1 2 3 4 5 6 7 8 9 10 ...
@@ -277,19 +230,19 @@ Projected CRS: SVY21
  - attr(*, "agr")= Factor w/ 3 levels "constant","aggregate",..: NA NA NA NA NA NA NA NA NA NA ...
   ..- attr(*, "names")= chr [1:13] "OBJECTID" "PLN_AREA_N" "PLN_AREA_C" "CA_IND" ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the tmap mode</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">"plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the tmap mode</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">"plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>tmap mode set to plotting</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the map with labels</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>singapore_map_plot <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(singapore_map) <span class="sc">+</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">col =</span> <span class="st">"avg_resale_price"</span>, <span class="at">palette =</span> <span class="st">"Blues"</span>, <span class="at">title =</span> <span class="st">"Avg Resale Price"</span>) <span class="sc">+</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_text</span>(<span class="st">"PLN_AREA_N"</span>, <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">shadow =</span> <span class="cn">TRUE</span>, <span class="at">root =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">main.title =</span> <span class="st">"Map of Singapore Planning Areas"</span>, <span class="at">main.title.position =</span> <span class="st">"center"</span>)</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the map object</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(singapore_map_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the map with labels</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>singapore_map_plot <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(singapore_map) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">col =</span> <span class="st">"avg_resale_price"</span>, <span class="at">palette =</span> <span class="st">"Blues"</span>, <span class="at">title =</span> <span class="st">"Avg Resale Price"</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_text</span>(<span class="st">"PLN_AREA_N"</span>, <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">shadow =</span> <span class="cn">TRUE</span>, <span class="at">root =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">main.title =</span> <span class="st">"Map of Singapore Planning Areas"</span>, <span class="at">main.title.position =</span> <span class="st">"center"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the map object</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(singapore_map_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -299,145 +252,39 @@ Projected CRS: SVY21
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read and process shapefile</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>shapefile_path <span class="ot">&lt;-</span> <span class="st">"data/geospatial/MP14_PLNG_AREA_NO_SEA_PL.shp"</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> <span class="fu">st_read</span>(shapefile_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Reading layer `MP14_PLNG_AREA_NO_SEA_PL' from data source 
-  `C:\Users\User\Desktop\Year 2 Tri 3\CSC3107 Info Visual\CSC3107 Project\data\geospatial\MP14_PLNG_AREA_NO_SEA_PL.shp' 
-  using driver `ESRI Shapefile'
-Simple feature collection with 55 features and 12 fields
-Geometry type: MULTIPOLYGON
-Dimension:     XY
-Bounding box:  xmin: 2667.538 ymin: 15748.72 xmax: 56396.44 ymax: 50256.33
-Projected CRS: SVY21</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>singapore_map<span class="sc">$</span>geometry <span class="ot">&lt;-</span> <span class="fu">st_make_valid</span>(singapore_map<span class="sc">$</span>geometry)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> singapore_map <span class="sc">%&gt;%</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PLN_AREA_N =</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">"Islands|Catchment"</span>, PLN_AREA_N, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>), <span class="st">""</span>, PLN_AREA_N))</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Read CSV data</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>csv_data_path <span class="ot">&lt;-</span> <span class="st">"flatprice5_last3year.csv"</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(csv_data_path)</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if 'town' column exists and rename it to match shapefile</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="st">"town"</span> <span class="sc">%in%</span> <span class="fu">names</span>(data)) {</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">PLN_AREA_N =</span> town)</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"The column 'town' does not exist in the CSV data."</span>)</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize the data to get average resale price for each town</span></span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>data_summary <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PLN_AREA_N) <span class="sc">%&gt;%</span></span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_resale_price =</span> <span class="fu">mean</span>(resale_price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure 'PLN_AREA_N' exists in both data frames before merging</span></span>
-<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="st">"PLN_AREA_N"</span> <span class="sc">%in%</span> <span class="fu">names</span>(singapore_map)) {</span>
-<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"The column 'PLN_AREA_N' does not exist in the shapefile data."</span>)</span>
-<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge the summarized data with the shapefile data</span></span>
-<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> singapore_map <span class="sc">%&gt;%</span></span>
-<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(data_summary, <span class="at">by =</span> <span class="st">"PLN_AREA_N"</span>)</span>
-<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if the merge was successful</span></span>
-<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(singapore_map) <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"The merge resulted in an empty data frame. Please check the input data."</span>)</span>
-<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for NA values in 'PLN_AREA_N'</span></span>
-<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">sum</span>(<span class="fu">is.na</span>(singapore_map<span class="sc">$</span>PLN_AREA_N)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify merged data</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(singapore_map))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Simple feature collection with 6 features and 13 fields
-Geometry type: POLYGON
-Dimension:     XY
-Bounding box:  xmin: 11059.9 ymin: 26375.86 xmax: 42502.87 ymax: 42176.12
-Projected CRS: SVY21
-  OBJECTID  PLN_AREA_N PLN_AREA_C CA_IND          REGION_N REGION_C
-1        1  ANG MO KIO         AM      N NORTH-EAST REGION      NER
-2        2       BEDOK         BD      N       EAST REGION       ER
-3        3      BISHAN         BS      N    CENTRAL REGION       CR
-4        4    BOON LAY         BL      N       WEST REGION       WR
-5        5 BUKIT BATOK         BK      N       WEST REGION       WR
-6        6 BUKIT MERAH         BM      N    CENTRAL REGION       CR
-           INC_CRC FMEL_UPD_D   X_ADDR   Y_ADDR SHAPE_Leng SHAPE_Area
-1 E5CBDDE0C2113055 2016-05-11 28976.88 40229.12   17494.24   13941380
-2 1719251260799DF6 2016-05-11 38582.67 34032.10   21872.80   21733188
-3 BA616285F402846F 2016-05-11 28789.76 37450.89   13517.12    7618921
-4 A3DC87118B43CDED 2016-05-11 13410.38 33008.99   18528.47    8279408
-5 FB44C870B04B7F57 2016-05-11 19255.42 37527.65   15234.22   11133256
-6 738B479882E4EE28 2016-05-11 26865.78 28662.87   29156.29   14462472
-  avg_resale_price                       geometry
-1         514378.2 POLYGON ((30658.5 42047.53,...
-2         506537.6 POLYGON ((38974.27 36138.24...
-3         741177.7 POLYGON ((29772.19 38311.8,...
-4               NA POLYGON ((12861.38 32207.49...
-5         546641.7 POLYGON ((20294.46 39114.53...
-6         664019.7 POLYGON ((26231.96 30743.34...</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(singapore_map)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Classes 'sf' and 'data.frame':  55 obs. of  14 variables:
- $ OBJECTID        : int  1 2 3 4 5 6 7 8 9 10 ...
- $ PLN_AREA_N      : chr  "ANG MO KIO" "BEDOK" "BISHAN" "BOON LAY" ...
- $ PLN_AREA_C      : chr  "AM" "BD" "BS" "BL" ...
- $ CA_IND          : chr  "N" "N" "N" "N" ...
- $ REGION_N        : chr  "NORTH-EAST REGION" "EAST REGION" "CENTRAL REGION" "WEST REGION" ...
- $ REGION_C        : chr  "NER" "ER" "CR" "WR" ...
- $ INC_CRC         : chr  "E5CBDDE0C2113055" "1719251260799DF6" "BA616285F402846F" "A3DC87118B43CDED" ...
- $ FMEL_UPD_D      : Date, format: "2016-05-11" "2016-05-11" ...
- $ X_ADDR          : num  28977 38583 28790 13410 19255 ...
- $ Y_ADDR          : num  40229 34032 37451 33009 37528 ...
- $ SHAPE_Leng      : num  17494 21873 13517 18528 15234 ...
- $ SHAPE_Area      : num  13941380 21733188 7618921 8279408 11133256 ...
- $ avg_resale_price: num  514378 506538 741178 NA 546642 ...
- $ geometry        :sfc_GEOMETRY of length 55; first list element: List of 1
-  ..$ : num [1:447, 1:2] 30659 30679 30679 30690 30709 ...
-  ..- attr(*, "class")= chr [1:3] "XY" "POLYGON" "sfg"
- - attr(*, "sf_column")= chr "geometry"
- - attr(*, "agr")= Factor w/ 3 levels "constant","aggregate",..: NA NA NA NA NA NA NA NA NA NA ...
-  ..- attr(*, "names")= chr [1:13] "OBJECTID" "PLN_AREA_N" "PLN_AREA_C" "CA_IND" ...</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill NA values in avg_resale_price with a default value (50,000)</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>singapore_map<span class="sc">$</span>avg_resale_price[<span class="fu">is.na</span>(singapore_map<span class="sc">$</span>avg_resale_price)] <span class="ot">&lt;-</span> <span class="dv">50000</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new column for labeling based on avg_resale_price</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> singapore_map <span class="sc">%&gt;%</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">label =</span> <span class="fu">ifelse</span>(avg_resale_price <span class="sc">&lt;</span> <span class="dv">450000</span> <span class="sc">|</span> avg_resale_price <span class="sc">==</span> <span class="dv">50000</span>, <span class="cn">NA</span>, PLN_AREA_N))</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the cartogram</span></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>singapore_cartogram <span class="ot">&lt;-</span> <span class="fu">cartogram_cont</span>(singapore_map, <span class="st">"avg_resale_price"</span>, <span class="at">itermax =</span> <span class="dv">10</span>)</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the tmap mode</span></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">"plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill NA values in avg_resale_price with a default value (50,000)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>singapore_map<span class="sc">$</span>avg_resale_price[<span class="fu">is.na</span>(singapore_map<span class="sc">$</span>avg_resale_price)] <span class="ot">&lt;-</span> <span class="dv">50000</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new column for labeling based on avg_resale_price</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> singapore_map <span class="sc">%&gt;%</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">label =</span> <span class="fu">ifelse</span>(avg_resale_price <span class="sc">&lt;</span> <span class="dv">450000</span> <span class="sc">|</span> avg_resale_price <span class="sc">==</span> <span class="dv">50000</span>, <span class="cn">NA</span>, PLN_AREA_N))</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the cartogram</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>singapore_cartogram <span class="ot">&lt;-</span> <span class="fu">cartogram_cont</span>(singapore_map, <span class="st">"avg_resale_price"</span>, <span class="at">itermax =</span> <span class="dv">10</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the tmap mode</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">"plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>tmap mode set to plotting</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the breaks and labels for the color scale</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">50000</span>, <span class="dv">450000</span>, <span class="dv">500000</span>, <span class="dv">550000</span>, <span class="dv">600000</span>, <span class="dv">650000</span>, <span class="dv">700000</span>, <span class="dv">750000</span>, <span class="dv">800000</span>)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Missing"</span> , <span class="st">"450,000 to 500,000"</span>, <span class="st">"500,000 to 550,000"</span>, <span class="st">"550,000 to 600,000"</span>, <span class="st">"600,000 to 650,000"</span>, <span class="st">"650,000 to 700,000"</span>, <span class="st">"700,000 to 750,000"</span>, <span class="st">"750,000 to 800,000"</span>)</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a factor column for avg_resale_price with specified levels</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>singapore_map<span class="sc">$</span>avg_resale_price <span class="ot">&lt;-</span> <span class="fu">factor</span>(singapore_map<span class="sc">$</span>avg_resale_price, <span class="at">levels =</span> breaks)</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Define your color palette and breaks</span></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>palette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"grey"</span>, <span class="fu">brewer.pal</span>(<span class="dv">5</span>, <span class="st">"Blues"</span>))  <span class="co"># Replace '5' with the number of colors you need</span></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the cartogram with custom colors</span></span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>singapore_cartogram_plot <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(singapore_cartogram) <span class="sc">+</span></span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">col =</span> <span class="st">"avg_resale_price"</span>, <span class="at">palette =</span> palette, <span class="at">title =</span> <span class="st">"Avg Resale Price"</span>, <span class="at">breaks =</span> breaks, <span class="at">labels =</span> labels, <span class="at">colorNA =</span> <span class="st">"grey"</span>) <span class="sc">+</span></span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_text</span>(<span class="st">"label"</span>, <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">shadow =</span> <span class="cn">TRUE</span>, <span class="at">root =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">main.title =</span> <span class="st">"Cartogram of Singapore Planning Areas"</span>, <span class="at">main.title.position =</span> <span class="st">"center"</span>)</span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the map object</span></span>
-<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(singapore_cartogram_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the breaks and labels for the color scale</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">50000</span>, <span class="dv">450000</span>, <span class="dv">500000</span>, <span class="dv">550000</span>, <span class="dv">600000</span>, <span class="dv">650000</span>, <span class="dv">700000</span>, <span class="dv">750000</span>, <span class="dv">800000</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Missing"</span> , <span class="st">"450,000 to 500,000"</span>, <span class="st">"500,000 to 550,000"</span>, <span class="st">"550,000 to 600,000"</span>, <span class="st">"600,000 to 650,000"</span>, <span class="st">"650,000 to 700,000"</span>, <span class="st">"700,000 to 750,000"</span>, <span class="st">"750,000 to 800,000"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a factor column for avg_resale_price with specified levels</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>singapore_map<span class="sc">$</span>avg_resale_price <span class="ot">&lt;-</span> <span class="fu">factor</span>(singapore_map<span class="sc">$</span>avg_resale_price, <span class="at">levels =</span> breaks)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Define your color palette and breaks</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>palette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"grey"</span>, <span class="fu">brewer.pal</span>(<span class="dv">5</span>, <span class="st">"Blues"</span>))  <span class="co"># Replace '5' with the number of colors you need</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the cartogram with custom colors</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>singapore_cartogram_plot <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(singapore_cartogram) <span class="sc">+</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">col =</span> <span class="st">"avg_resale_price"</span>, <span class="at">palette =</span> palette, <span class="at">title =</span> <span class="st">"Avg Resale Price"</span>, <span class="at">breaks =</span> breaks, <span class="at">labels =</span> labels, <span class="at">colorNA =</span> <span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_text</span>(<span class="st">"label"</span>, <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">shadow =</span> <span class="cn">TRUE</span>, <span class="at">root =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">main.title =</span> <span class="st">"Cartogram of Singapore Planning Areas"</span>, <span class="at">main.title.position =</span> <span class="st">"center"</span>)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the map object</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(singapore_cartogram_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -445,6 +292,12 @@ Projected CRS: SVY21
 </figure>
 </div>
 </div>
+</div>
+</section>
+<section id="saving-the-generated-cartogram-as-a-png" class="level2">
+<h2 class="anchored" data-anchor-id="saving-the-generated-cartogram-as-a-png">Saving the generated cartogram as a png</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_save</span>(singapore_cartogram_plot, <span class="at">filename =</span> <span class="st">"images/cartogram.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 

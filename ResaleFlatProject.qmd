@@ -4,8 +4,11 @@ format: html
 ---
 
 ## Library
-
 ```{r}
+#| label: required-packages
+#| message: false
+#| warning: false
+
 ## Install and load necessary packages
 packages = c('sf', 
              'tmap', 
@@ -16,6 +19,7 @@ packages = c('sf',
              'repr',
              'viridis',
              'RColorBrewer')
+
 for (p in packages){
   if(!require(p, character.only = TRUE)){
     install.packages(p)
@@ -86,56 +90,10 @@ singapore_map_plot <- tm_shape(singapore_map) +
 
 # Print the map object
 print(singapore_map_plot)
-
-
 ```
 
+
 ```{r}
-# Read and process shapefile
-shapefile_path <- "data/geospatial/MP14_PLNG_AREA_NO_SEA_PL.shp"
-singapore_map <- st_read(shapefile_path)
-singapore_map$geometry <- st_make_valid(singapore_map$geometry)
-singapore_map <- singapore_map %>%
-  mutate(PLN_AREA_N = ifelse(grepl("Islands|Catchment", PLN_AREA_N, ignore.case = TRUE), "", PLN_AREA_N))
-
-# Read CSV data
-csv_data_path <- "flatprice5_last3year.csv"
-data <- read.csv(csv_data_path)
-
-# Check if 'town' column exists and rename it to match shapefile
-if ("town" %in% names(data)) {
-  data <- data %>%
-    rename(PLN_AREA_N = town)
-} else {
-  stop("The column 'town' does not exist in the CSV data.")
-}
-
-# Summarize the data to get average resale price for each town
-data_summary <- data %>%
-  group_by(PLN_AREA_N) %>%
-  summarise(avg_resale_price = mean(resale_price, na.rm = TRUE))
-
-# Ensure 'PLN_AREA_N' exists in both data frames before merging
-if (!"PLN_AREA_N" %in% names(singapore_map)) {
-  stop("The column 'PLN_AREA_N' does not exist in the shapefile data.")
-}
-
-# Merge the summarized data with the shapefile data
-singapore_map <- singapore_map %>%
-  left_join(data_summary, by = "PLN_AREA_N")
-
-# Check if the merge was successful
-if (nrow(singapore_map) == 0) {
-  stop("The merge resulted in an empty data frame. Please check the input data.")
-}
-
-# Check for NA values in 'PLN_AREA_N'
-print(sum(is.na(singapore_map$PLN_AREA_N)))
-
-# Verify merged data
-print(head(singapore_map))
-str(singapore_map)
-
 # Fill NA values in avg_resale_price with a default value (50,000)
 singapore_map$avg_resale_price[is.na(singapore_map$avg_resale_price)] <- 50000
 
@@ -167,4 +125,10 @@ singapore_cartogram_plot <- tm_shape(singapore_cartogram) +
 
 # Print the map object
 print(singapore_cartogram_plot)
+```
+
+## Saving the generated cartogram as a png
+```{r}
+#| message: false
+tmap_save(singapore_cartogram_plot, filename = "images/cartogram.png")
 ```
