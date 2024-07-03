@@ -36,19 +36,21 @@ singapore_map <- singapore_map |>
   mutate(PLN_AREA_N = ifelse(grepl("Islands|Catchment", PLN_AREA_N, ignore.case = TRUE), "", PLN_AREA_N))
 
 # Read CSV data
-csv_data_path <- "flatprice5_last3year.csv"
+csv_data_path <- "flatprice5.csv"
 data <- read.csv(csv_data_path)
+filtered_data <- subset(data, month >= "2021-06" & month <= "2024-05")
+row.names(filtered_data) <- NULL
 
 # Check if 'town' column exists and rename it to match shapefile
-if ("town" %in% names(data)) {
-  data <- data %>%
+if ("town" %in% names(filtered_data)) {
+  filtered_data <- filtered_data %>%
     rename(PLN_AREA_N = town)
 } else {
   stop("The column 'town' does not exist in the CSV data.")
 }
 
 # Summarize the data to get average resale price for each town
-data_summary <- data %>%
+data_summary <- filtered_data %>%
   group_by(PLN_AREA_N) %>%
   summarise(avg_resale_price = mean(resale_price, na.rm = TRUE))
 
@@ -89,7 +91,6 @@ print(singapore_map_plot)
 ```
 
 ```{r}
-
 # Read and process shapefile
 shapefile_path <- "data/geospatial/MP14_PLNG_AREA_NO_SEA_PL.shp"
 singapore_map <- st_read(shapefile_path)
