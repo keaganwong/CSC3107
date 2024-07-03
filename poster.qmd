@@ -1,0 +1,94 @@
+---
+title: Visualizing HDB Resale Price in Singapore (Jun 2021 – May 2024)
+format:
+  poster-typst: 
+    size: "33x23" # Approximately A1
+    poster-authors: "Joshua Loh Jun Wei, Kovi Tan Wee Kok, Ng Jing Yi, Ng Jun Hong, Quek Jinghui, Wong Kar Long Keagan"
+    departments: "Bachelor of Science with Honours in Computing Science"
+    institution-logo: "./images/sit-logo.png"
+    footer-text: "Information Visualization 2024"
+    footer-emails: "2203684, 2203244, 2202547, 2200875, 2201752, 2200517@sit.singaporetech.edu.sg"
+execute:
+  echo: false
+knitr:
+  opts_chunk:
+    dev: svglite
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(knitr)
+```
+
+
+# Introduction
+Housing Development Board (HDB) flats in Singapore are a significant aspect of the nation’s housing market, providing affordable housing options to the majority of Singaporeans. The fluctuation of HDB prices can impact a wide range of socio-economic factors, including affordability, household wealth, and overall economic stability. The average resale price of HDB flats has seen considerable variation, influenced by factors such as government policies, economic conditions, and demographic shifts.[^Goh-Housing_Prices_2020] However, recent trends indicate a steady rise in prices due to increased demand and limited supply.[^Tan-HDB_Price_Trends_2021] Consequently, understanding the factors driving these price changes is crucial for policy-making and market forecasting.
+
+[^Goh-Housing_Prices_2020]:S. Goh et al., “Determinants of Housing Prices: Evidence from Singapore’s HDB Market,” Journal of Housing Economics, vol. 50, pp. 101-115, 2020
+[^Tan-HDB_Price_Trends_2021]:M. Tan et al., “Trends in HDB Resale Prices: An Analytical Review,” Urban Studies Journal, vol. 58, no. 2, pp. 300-315, 2021
+
+Given the importance of housing affordability to Singapore’s socio-economic landscape, it is essential to communicate the dynamics of HDB prices clearly. In this project, we built on a comprehensive analysis of HDB resale price published by Medium (@fig-original) [^Chan_Understanding_HDB_Prices_2020].
+
+[^Chan_Understanding_HDB_Prices_2020]: <https://towardsdatascience.com/understanding-and-predicting-resale-hdb-flat-prices-in-singapore-1853ec7069b0>
+
+# Previous Visualization
+
+```{r}
+#| label: fig-original
+#| fig-cap: "Geographical Price Heatmap of Resale Flats. Source: Your Source Here."
+#| out-width: 100%
+
+include_graphics("images/original.png")
+```
+
+# Strengths
+
+1. Clear Data Visualization: The heat map design effectively conveys a high information content.
+
+2. Color Gradient: The use of a continuous color gradient helps in visualizing the variations in resale prices across different regions, making the data more comprehensible.
+
+3. Geographical Context: The inclusion of geographical labels for towns and regions provides valuable contextual information, helping users understand the spatial distribution of the data.
+
+4. Spatial Clarity: The map maintains spatial clarity by effectively distinguishing between different regions and towns, which helps users easily identify areas of interest.
+
+5. Visual Appeal: The overall visual design of the heat map is aesthetically pleasing, which can engage viewers and encourage a deeper exploration of the data.
+
+
+# Suggested Improvements
+
+1. Enhance Map Labels: Increase the contrast and size of the map labels for towns and regions to ensure they are easily readable, even when overlaid with the heat map.
+
+2. Address Color Overlap: In densely populated areas, reduce color overlap by using distinct color boundaries to better differentiate specific price variations.
+
+3. Refine Scale and Range: Improve the color scale's resolution to capture subtle price variations more accurately, preventing the data from appearing oversimplified.
+
+
+# Implementation
+
+
+## Data
+
+
+
+## Software
+
+
+# Improved Visualization
+
+```{r}
+#| label: fig-cartogram
+#| fig-cap: "add desc."
+#| fig-width: 6.0
+#| fig-height: 5.8
+#| out-width: 100%
+
+include_graphics("images/cartogram.png")
+```
+
+
+
+
+# Conclusion
+
