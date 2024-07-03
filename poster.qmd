@@ -37,7 +37,7 @@ Given the importance of housing affordability to Singapore’s socio-economic la
 
 ```{r}
 #| label: fig-original
-#| fig-cap: "Geographical Price Heatmap of Resale Flats. Source: Your Source Here."
+#| fig-cap: "Geographical Price Heatmap of Resale Flats."
 #| out-width: 100%
 
 include_graphics("images/original.png")
@@ -79,6 +79,8 @@ include_graphics("images/original.png")
 We used the Quarto publication framework and the R programming language, along with the following third-party packages:
 
 *   *sf* for handling and analyzing spatial data in simple feature format, making it easy to work with geographic information.
+*   *tmap* for thematic mapping, offering tools to create interactive and static maps with a range of customization options.
+*   *tidyverse*, a collection of R packages designed for data science, including ggplot2 and dplyr
 *   *cartogram* for creating cartograms, which are maps that represent data by distorting the geometry of spatial features based on the values of a particular variable.
 *   *ggplot2* for visualization, using a powerful and flexible grammar of graphics to create a wide variety of static and dynamic plots.
 *   *dplyr* for data manipulation and transformation, providing a set of intuitive functions for filtering, summarizing, and modifying data frames.
@@ -91,7 +93,7 @@ We used the Quarto publication framework and the R programming language, along w
 
 ```{r}
 #| label: fig-cartogram
-#| fig-cap: "add desc."
+#| fig-cap: "Cartogram of HDB resale pricing in Singapore"
 #| fig-width: 6.0
 #| fig-height: 5.8
 #| out-width: 100%

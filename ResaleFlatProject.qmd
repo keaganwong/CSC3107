@@ -3,21 +3,31 @@ title: "ResaleFlatProject"
 format: html
 ---
 
-Install tmap package if not installed
-
-## Choropleth
-Choropleth of Singapore Map with Plan Area Name
+## Library
 
 ```{r}
 ## Install and load necessary packages
-packages = c('sf', 'tmap', 'tidyverse')
+packages = c('sf', 
+             'tmap', 
+             'tidyverse', 
+             'cartogram',
+             'ggplot2',
+             'dplyr',
+             'repr',
+             'viridis',
+             'RColorBrewer')
 for (p in packages){
   if(!require(p, character.only = TRUE)){
     install.packages(p)
   }
   library(p, character.only = TRUE)
 }
+```
 
+## Choropleth
+Choropleth of Singapore Map with Plan Area Name
+
+```{r}
 # Read and process shapefile
 shapefile_path <- "data/geospatial/MP14_PLNG_AREA_NO_SEA_PL.shp"
 singapore_map <- st_read(shapefile_path)
@@ -79,22 +89,6 @@ print(singapore_map_plot)
 ```
 
 ```{r}
-library(sf)
-library(cartogram)
-library(ggplot2)
-library(dplyr)
-library(repr)
-library(viridis)
-library(RColorBrewer)
-
-# Install and load necessary packages
-packages = c('sf', 'tmap', 'tidyverse', 'cartogram')
-for (p in packages){
-  if(!require(p, character.only = TRUE)){
-    install.packages(p)
-  }
-  library(p, character.only = TRUE)
-}
 
 # Read and process shapefile
 shapefile_path <- "data/geospatial/MP14_PLNG_AREA_NO_SEA_PL.shp"
