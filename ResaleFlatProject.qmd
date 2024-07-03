@@ -1,15 +1,17 @@
 ---
-title: "ResaleFlatProject"
+title: "Visualizing HDB Resale Price in Singapore (Jun 2021 – May 2024)"
 format: html
 ---
 
-## Library
+## Introduction
+This document contains the data engineering required to reconstruct and improve the plot shown in Figure 1, visualizing the resale flat prices in Singapore by planning area from 2017 to 2020. The heat map displays the spatial distribution of resale prices, with color intensity representing different price ranges. Blue hues indicate lower prices, while red hues indicate higher prices. This visualization aids in identifying areas with varying resale flat values, providing insights into the property market across Singapore.
+
+The code below requires the following packages:
 ```{r}
 #| label: required-packages
 #| message: false
 #| warning: false
 
-## Install and load necessary packages
 packages = c('sf', 
              'tmap', 
              'tidyverse', 
@@ -18,7 +20,8 @@ packages = c('sf',
              'dplyr',
              'repr',
              'viridis',
-             'RColorBrewer')
+             'RColorBrewer',
+             'knitr')
 
 for (p in packages){
   if(!require(p, character.only = TRUE)){
@@ -28,17 +31,24 @@ for (p in packages){
 }
 ```
 
-## Choropleth
-Choropleth of Singapore Map with Plan Area Name
-
 ```{r}
-# Read and process shapefile
-shapefile_path <- "data/geospatial/MP14_PLNG_AREA_NO_SEA_PL.shp"
-singapore_map <- st_read(shapefile_path)
-singapore_map$geometry <- st_make_valid(singapore_map$geometry)
-singapore_map <- singapore_map |>
-  mutate(PLN_AREA_N = ifelse(grepl("Islands|Catchment", PLN_AREA_N, ignore.case = TRUE), "", PLN_AREA_N))
+#| label: fig-original
+#| fig-cap: "Geographical Price Heatmap of Resale Flats.The dataset used contain information on all resale HDB flat transactions from 2017 to 2020"
+#| out-width: 100%
+#| echo: false
 
+include_graphics("images/original.png")
+```
+
+## Data Cleaning
+The visualization is based on resale flat price data and a shapefile representing the planning areas in Singapore. The data includes:
+
+1. Geospatial shapefile for planning areas
+
+2. CSV file containing resale flat prices from Jan 2017 to May 2024
+
+The CSV file will be trimmed to show only the past 3 years worth of data from Jun 2021 to May 2024. Limiting the dataset to the past three years ensures that the visualization reflects current market trends and conditions. Older data may not accurately represent the current state of the real estate market, as economic conditions, government policies, and buyer preferences can change over time.
+```{r}
 # Read CSV data
 csv_data_path <- "flatprice5.csv"
 data <- read.csv(csv_data_path)
@@ -57,6 +67,20 @@ if ("town" %in% names(filtered_data)) {
 data_summary <- filtered_data %>%
   group_by(PLN_AREA_N) %>%
   summarise(avg_resale_price = mean(resale_price, na.rm = TRUE))
+```
+
+## Load and Process shapefile
+```{r}
+#| message: false
+#| output: false
+
+# Read and process shapefile
+shapefile_path <- "data/geospatial/MP14_PLNG_AREA_NO_SEA_PL.shp"
+singapore_map <- st_read(shapefile_path)
+singapore_map$geometry <- st_make_valid(singapore_map$geometry)
+singapore_map <- singapore_map |>
+  mutate(PLN_AREA_N = ifelse(grepl("Islands|Catchment", PLN_AREA_N, ignore.case = TRUE), "", PLN_AREA_N))
+
 
 # Ensure 'PLN_AREA_N' exists in both data frames before merging
 if (!"PLN_AREA_N" %in% names(singapore_map)) {
@@ -78,6 +102,14 @@ print(sum(is.na(singapore_map$PLN_AREA_N)))
 # Verify merged data
 print(head(singapore_map))
 str(singapore_map)
+```
+
+
+
+## Choropleth
+The choropleth map visually represents average resale prices of flats across different planning areas in Singapore. This type of map uses color gradients to indicate variations in data across geographical regions.
+```{r}
+#| message: false
 
 # Set the tmap mode
 tmap_mode("plot")
@@ -92,8 +124,13 @@ singapore_map_plot <- tm_shape(singapore_map) +
 print(singapore_map_plot)
 ```
 
+## Cartogram
+A cartogram distorts the geographical boundaries of regions based on a variable of interest (here, average resale prices). This technique provides a visual representation where the size of each planning area is adjusted relative to its resale price.
 
+By removing excessive town names and focusing on the most relevant ones correlated with resale values, the cartogram visualization becomes a more effective tool for conveying spatial patterns and trends in Singapore's housing market. It strikes a balance between providing detailed information and maintaining visual clarity, ultimately enhancing the viewer's ability to interpret and derive insights from the data.
 ```{r}
+#| message: false
+
 # Fill NA values in avg_resale_price with a default value (50,000)
 singapore_map$avg_resale_price[is.na(singapore_map$avg_resale_price)] <- 50000
 
@@ -120,15 +157,18 @@ palette <- c("grey", brewer.pal(5, "Blues"))  # Replace '5' with the number of c
 # Plot the cartogram with custom colors
 singapore_cartogram_plot <- tm_shape(singapore_cartogram) +
   tm_polygons(col = "avg_resale_price", palette = palette, title = "Avg Resale Price", breaks = breaks, labels = labels, colorNA = "grey") +
-  tm_text("label", size = 0.5, col = "black", shadow = TRUE, root = 4) +
+  tm_text("label", size = 0.5, col = "black", shadow = FALSE, root = 4) +
   tm_layout(main.title = "Cartogram of Singapore Planning Areas", main.title.position = "center")
 
 # Print the map object
 print(singapore_cartogram_plot)
 ```
 
-## Saving the generated cartogram as a png
+
 ```{r}
+#| echo: false
 #| message: false
+
+# Saving the generated cartogram as a png
 tmap_save(singapore_cartogram_plot, filename = "images/cartogram.png")
 ```
